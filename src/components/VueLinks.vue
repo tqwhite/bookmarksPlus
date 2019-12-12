@@ -104,7 +104,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "VueLinks",
   props: {
     msg: String
   }
