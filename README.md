@@ -1,4 +1,4 @@
-# bookmarks-plus
+# Bookmarks Plus
 
 ## Project setup
 ```

@@ -8,6 +8,14 @@
         >vue-cli documentation</a
       >.
     </p>
+    <h3>Specific Documentation</h3>
+    <ul>
+      <li>
+        <a href="https://cli.vuejs.org/config/" target="_blank" rel="noopener"
+          >vue.config.js</a
+        >
+      </li>
+    </ul>
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li>

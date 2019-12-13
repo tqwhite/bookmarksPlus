@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
 import mainGrid from "./modules/mainGrid";
 
 Vue.use(Vuex);

@@ -1,12 +1,12 @@
 <template>
   <div class="about">
-    <VueLinks msg="Welcome to The Beginning of Bookmarks Plus" />
+    <VueLinks msg="Auxilliary Static Links for Development" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import VueLinks from "@/components/VueLinks.vue";
+import VueLinks from "@/components/Auxilliary/components/Auxilliary.vue";
 
 export default {
   name: "viewLinks",
