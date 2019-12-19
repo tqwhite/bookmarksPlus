@@ -8,9 +8,15 @@
   </div>
 </template>
 
+<script>
+//Note: router initialization is router/index.js
+</script>
+
+
 <style lang="less">
 body {
-  background: #efd;
+  background: #004643;
+  color:white;
 }
 
 #app {
@@ -18,15 +24,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
-
+/* https://www.happyhues.co/palettes/10 */
 #nav {
   border-bottom: 0.5pt solid #42b983;
   text-align: right;
   a {
     font-weight: bold;
-    color: #42b983;
+    color: #f9bc60;
     text-decoration: none;
 
     &.router-link-exact-active {

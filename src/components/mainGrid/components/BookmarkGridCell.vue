@@ -1,8 +1,12 @@
 <template>
   <div
     class="bookmark"
-    v-html="makeAnchor(bookmark.position.row, bookmark.position.col, bookmark)"
-  />
+  >
+  <a class="bookmark" :href="bookmark.anchor.uri">
+        <span v-html="bookmark.anchor.text" />
+        <span class="annotation">({{bookmark.position.row}}, {{bookmark.position.column}})</span>
+        </a>
+  </div>
 </template>
 
 <script>
@@ -14,13 +18,7 @@ export default {
     bookmark: {}
   },
   computed: {
-    ...mapGetters([]),
-    makeAnchor: () =>
-      function(row, col, bookmark) {
-        return `<a class="bookmark" style="text-decoration:none;" href='${bookmark.anchor.uri}'>
-        ${bookmark.anchor.text} <span style="font-size:80%;">(${bookmark.position.row}, ${bookmark.position.column})</span>}
-        </a>`;
-      }
+    ...mapGetters([])
   },
   created() {
     //this.doSomething();
@@ -32,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.bookmark {
-  font-size: 10pt;
-}
+/*
+the css for this component is defined in its parent
+*/
 </style>

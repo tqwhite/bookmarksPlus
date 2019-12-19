@@ -50,7 +50,14 @@
 			"vue/no-unused-components": "off",
 			"vue/fix": true,
 			"fix": true,
-			"vue/order-in-components": "warning"
+			"vue/order-in-components": "warning",
+			"prettier/prettier": [
+				"off",
+				{
+					"#": "prettier config in here :)",
+					"useTabs": false
+				}
+			]
 		}
 	},
 	"browserslist": [

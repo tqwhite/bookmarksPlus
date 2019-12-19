@@ -1,15 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "@/components/mainGrid/mainGrid.vue";
+import MainGrid from "@/components/mainGrid/mainGrid.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home
+    name: "mainGrid",
+    component: MainGrid
   },
   {
     path: "/viewLinks",
