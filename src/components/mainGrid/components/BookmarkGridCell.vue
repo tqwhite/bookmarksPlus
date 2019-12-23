@@ -4,7 +4,10 @@
   >
   <a class="bookmark" :href="bookmark.anchor.uri">
         <span v-html="bookmark.anchor.text" />
-        <span class="annotation">({{bookmark.position.row}}, {{bookmark.position.column}})</span>
+        <span 
+        	class="annotation" 
+        	v-if="bookmark.anchor.text!='---'"
+        > ({{bookmark.position.row}}, {{bookmark.position.column}})</span>
         </a>
   </div>
 </template>
