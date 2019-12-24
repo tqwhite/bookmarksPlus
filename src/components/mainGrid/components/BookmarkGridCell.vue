@@ -1,15 +1,13 @@
 <template>
-  <div
-    class="bookmark"
-  >
-  <a class="bookmark" :href="bookmark.anchor.uri">
-        <span v-html="bookmark.anchor.text" />
-        <span 
-        	class="annotation" 
-        	v-if="bookmark.anchor.text!='---'"
-        > ({{bookmark.position.row}}, {{bookmark.position.column}})</span>
-        </a>
-  </div>
+	<div
+		class="bookmark"
+	>
+		<div>
+			<a class="bookmarkLink" :href="bookmark.anchor.uri">
+				<span v-html="bookmark.anchor.text" />
+			</a>
+		</div>
+	</div>
 </template>
 
 <script>

@@ -1,18 +1,39 @@
 <template>
-  <div
+<div 
+
   	v-if="editingBookmarksXXX"
+  	>
+  <div
   	v-on:click="cancelEditing"
-    class="editButtonCancel"
+    id="editButtonSave"
+    class="buttonDiv"
   >
-CANCEL EDITING
+SAVE
   </div>
-  <div v-else
-  	v-on:click="activateEditing"
-    class="editButtonActivate"
+  <div
+  	v-on:click="discardEdits"
+    id="editButtonDiscard"
+    class="buttonDiv"
   >
-EDIT
+DISCARD
   </div>
-  
+  </div>
+  <div v-else>
+	  <div 
+		v-on:click="activateEditing"
+		id="editButtonEdit"
+   	 class="buttonDiv"
+	  >
+	EDIT
+	  </div>
+	  <div 
+		v-on:click="activateReorg"
+		id="editButtonReorg"
+ 	   class="buttonDiv"
+	  >
+	REORG
+	  </div>
+  </div>
 </template>
 
 <script>
@@ -31,13 +52,20 @@ export default {
   },
   methods: {
     ...mapMutations(["editingBookmarks","token"]),
-    ...mapActions(["saveBookmarks"]),
+    ...mapActions(["saveBookmarks", "fetchBookmarkGrids"]),
+	activateReorg:function(){
+		this.editingBookmarks('reorg');
+	},
 	activateEditing:function(){
 		this.editingBookmarks(true);
 	},
 	cancelEditing:function(){
 		this.editingBookmarks(false);
 		this.saveBookmarks();
+	},
+	discardEdits:function(){
+		this.fetchBookmarkGrids();
+		this.editingBookmarks(false);
 	}
   }
 };
@@ -45,18 +73,47 @@ export default {
 
 <style scoped lang="less">
 
-@textColor:#f9bc60;
 
-.editButtonActivate{
+/*css definitions*/
+@textColor:#036;
+@borderColor:#001e1d;
+@background:#6CBBD9;
+@errorBackground:red;
+@errorText:white;
+@navLinkInactiveColor:#036;
+@navLinkActiveColor:#666;
+
+.buttonDiv{
+	display:inline-block;
 	color:@textColor;
-	width:150px;
-	font-size:90%;
-	padding-top:5% 0px;
+	font-size:80%;
+	font-weight:bold;
+	padding:2px;
+	margin-right:2px;
+	cursor:pointer;
 }
-.editButtonCancel{
-	background:#f25042;
-	width:150px;
-	font-size:90%;
-	padding-top:5% 0px;
+
+
+
+
+#editButtonEdit:hover{
+color:rgba(@textColor, .4);
+}
+#editButtonReorg:hover{
+color:rgba(@textColor, .4);}
+
+#editButtonSave{
+background:rgba(red, .5);
+padding:0px 13px;
+}
+#editButtonDiscard{
+color:rgba(@textColor, .8);
+font-size:80%;}
+
+#editButtonDiscard:hover{
+color:rgba(white, .8);
+}
+#editButtonSave:hover{
+background:rgba(red, .8);
 }
 </style>

@@ -39,7 +39,14 @@ export default {
 
 <style lang="less">
 
-@background:#004643;
+/*css definitions*/
+@textColor:#036;
+@borderColor:#001e1d;
+@background:#6CBBD9;
+@errorBackground:red;
+@errorText:white;
+@navLinkInactiveColor:#036;
+@navLinkActiveColor:#666;
 
 body {
   background: @background;
@@ -54,23 +61,27 @@ body {
 }
 /* https://www.happyhues.co/palettes/10 */
 #nav {
-  border-bottom: 0.5pt solid #42b983;
+  border-bottom: 1pt solid rgba(@borderColor, .3);
   display:flex;
   flex-direction:row;
   padding:0px 20px;
+  font-size:70%;
 }
 #links {
 	flex-grow:1;
   text-align: right;
   a {
     font-weight: bold;
-    color: #f9bc60;
+    color: @navLinkInactiveColor;
     text-decoration: none;
 
     &.router-link-exact-active {
-      color: #aaa;
+      color: @navLinkActiveColor;
       cursor: default;
     }
+  }
+  a:hover{
+  	opacity:.4;
   }
 }
 

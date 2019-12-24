@@ -55,7 +55,7 @@ export default {
 				: 0;
 
 			let navHeight;
-			let fudgeFactor=0; //arithmetic always overflows space a little, no patience to fix it
+			let fudgeFactor=20; //arithmetic always overflows space a little, no patience to fix it
 
 			if (containerHeight === 0) {
 				navHeight = bodyHeight;
@@ -72,14 +72,9 @@ export default {
 			const rowHeight = Math.floor(
 				intendedContainerHeight / this.gridShape.rows
 			);
-			const paddingTop=Math.floor(.3*rowHeight);
-
 			return {
-				['grid-template-columns']: `repeat(${
-					this.gridShape.columns
-				}, ${colWidth}vw)`,
-				['grid-template-rows']: `repeat(${this.gridShape.rows}, ${rowHeight}px)`,
-				['padding-top']:`${paddingTop}px`
+				['grid-template-columns']: `repeat(${this.gridShape.columns}, ${colWidth}vw)`,
+				['grid-template-rows']: `repeat(${this.gridShape.rows}, ${rowHeight}px)`
 			};
 		}
 	},
@@ -96,7 +91,15 @@ export default {
 
 <style  lang="less">
 
-@textColor:#f9bc60;
+
+/*css definitions*/
+@textColor:#036;
+@borderColor:#001e1d;
+@background:#6CBBD9;
+@errorBackground:red;
+@errorText:white;
+@navLinkInactiveColor:#036;
+@navLinkActiveColor:#666;
 
 .bookmarkGrid{
 	display:grid;
@@ -105,23 +108,29 @@ b{
 	font-weight:900;
 }
 .bookmark {
-  font-size: 10pt;
+  font-size: 12pt;
+  color:@textColor;
+  border-bottom:.5pt solid rgba(@borderColor, .2);
+	display:flex;
+	flex-direction:column;
+			justify-content:center;
+			align-items:center;
+}
+.bookmarkLink {
   color:@textColor;
   text-decoration:none;
-  border-bottom:.5pt solid #001e1d;
+
 }
-.bookmark:hover {
+.bookmarkLink:hover {
   color:white;
 }
 
-.bookmark .annotation{
-  font-size: 80%;
-  opacity:.8;
+.bookmark div{
 }
 
 .error{
-	background:red;
-	color:white;
+	background:@errorBackground;
+	color:@errorText;
 	text-align:center;
 }
 </style>
