@@ -93,7 +93,6 @@ const getters = {
 					isPlaceholder:true
 				};
 			}
-
 			return result;
 		});
 		return bookmarkList; //this returns a list of bookmarks in the order they appear in the grid
@@ -149,18 +148,24 @@ const getters = {
 };
 
 const actions = {
-	async fetchBookmarkGrids({ commit }) {
+	async fetchBookmarkGrids({ state, commit }) {
 		//executed by components/MainGrid.vue at startup (created)
 
 		//api.bookmarksplus.org presently points at genericwhite/DEMO (port 9500)
-
+		
+		if (typeof(state.token.claims)=='undefined'){
+			return false;
+		}
+		
+		const userRefId=state.token.claims.userRefId;
+		
 		const response = await axios.get(
-			'http://api.bookmarksplus.org/bm/api/bookmarks'
+			`http://api.bookmarksplus.org/bm/api/bookmarks/${userRefId}`
 		);
 		commit('token', response.data.token);
 
 		const whatShouldBeComingFromAxios = response.data.data.filter(
-			item => item.userRefId == 'tqwhiteUserRefId'
+			item => item.userRefId == userRefId
 		)[0];
 		commit('responseData', whatShouldBeComingFromAxios); //in future, query will reduce the response to this
 
@@ -170,7 +175,6 @@ const actions = {
 		const currentGrid = whatShouldBeComingFromAxios.grids.filter(
 			item => (item.refId = currentGridRefId)
 		)[0];
-
 		commit('currentGrid', currentGrid);
 
 		commit('dataInitialized', true); //tell components it's time to display

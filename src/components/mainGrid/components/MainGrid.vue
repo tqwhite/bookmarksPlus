@@ -65,13 +65,13 @@ export default {
 				fudgeFactor=0;
 			}
 	
-
 			const intendedContainerHeight = windowHeight - navHeight-fudgeFactor;
 
 			const colWidth = Math.floor(100 / this.gridShape.columns);
-			const rowHeight = Math.floor(
+			const rowHeight = Math.min(Math.floor(
 				intendedContainerHeight / this.gridShape.rows
-			);
+			), 50);
+			
 			return {
 				['grid-template-columns']: `repeat(${this.gridShape.columns}, ${colWidth}vw)`,
 				['grid-template-rows']: `repeat(${this.gridShape.rows}, ${rowHeight}px)`
@@ -79,7 +79,10 @@ export default {
 		}
 	},
 	created() {
-		this.fetchBookmarkGrids();
+console.log(`\n=-=============   fetchBookmarkGrids  ========================= [MainGrid.vue.]\n`);
+
+
+	this.fetchBookmarkGrids();
 	},
 	components: {
 		BookmarkGridCell,
@@ -95,7 +98,7 @@ export default {
 /*css definitions*/
 @textColor:#036;
 @borderColor:#001e1d;
-@background:#6CBBD9;
+@background:#96cee4;
 @errorBackground:red;
 @errorText:white;
 @navLinkInactiveColor:#036;

@@ -77,7 +77,7 @@ export default {
 /*css definitions*/
 @textColor:#036;
 @borderColor:#001e1d;
-@background:#6CBBD9;
+@background:#96cee4;
 @errorBackground:red;
 @errorText:white;
 @navLinkInactiveColor:#036;

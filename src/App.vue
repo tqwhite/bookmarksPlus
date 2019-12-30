@@ -5,6 +5,7 @@
 				<BookmarkEditButton />
 			</div>
 			<div id='links'>
+				<account /> |
 				<router-link to="/">Main Grid</router-link> |
 				<router-link to="/viewLinks">Auxilliary Links</router-link>
 			</div>
@@ -15,7 +16,8 @@
 
 <script>
 //Note: router initialization is router/index.js
-import BookmarkEditButton from "@/components/mainGrid/components/BookmarkEditButton.vue"; // @ is an alias to /src
+import BookmarkEditButton from "@/components/mainGrid/components/BookmarkEditButton.vue";
+import Account from "@/components/account/account.vue"; // @ is an alias to /src
 
 
 export default {
@@ -31,7 +33,8 @@ export default {
   methods: {
   },
   components: {
-    BookmarkEditButton
+    BookmarkEditButton,
+    Account
   }
 };
 </script>
@@ -42,7 +45,7 @@ export default {
 /*css definitions*/
 @textColor:#036;
 @borderColor:#001e1d;
-@background:#6CBBD9;
+@background:#96cee4;
 @errorBackground:red;
 @errorText:white;
 @navLinkInactiveColor:#036;

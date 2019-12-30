@@ -1,0 +1,72 @@
+import axios from 'axios';
+import VueCookies from 'vue-cookies';
+
+console.dir({"VueCookies [account.js.]":VueCookies});
+
+//====================================================
+//====================================================
+
+const state = {
+	isLoggedIn: false,
+	authx:{
+		userName:'',
+		password:''
+	},
+	auth:{
+		userName:'tqwhite',
+		password:'shairWord!0'
+	}
+};
+
+/*
+	IF IT SEEMS that getters are mysteriously not being accessed but also
+	not throwing errors, reload the whole page.
+*/
+
+const getters = {
+	isLoggedIn: state => state.isLoggedIn,
+	auth: state => state.auth,
+};
+
+const actions = {
+		loginHOLD({ dispatch, commit }, auth){
+			console.dir({"auth [account.js.actions]":auth});
+			dispatch('fetchBookmarkGrids')
+			commit('isLoggedInXXX', true);
+		},
+		
+		async login({ dispatch, commit }, auth) {
+	
+			const response = await axios.post(
+				`http://api.bookmarksplus.org/api/user/`,
+				auth
+			);
+	
+			if (response.status != 200) {
+				commit('errorCondition', response.statusText);
+			}
+			else{			
+				commit('token', response.data.token);
+				commit('isLoggedInXXX', true);
+				dispatch('fetchBookmarkGrids');
+			}
+		},
+};
+
+const mutations = {
+	isLoggedInXXX: (state, item) => {
+		state.isLoggedIn = item;
+	},
+	
+	auth: (state, item) => {
+		state.auth = item;
+	}
+	
+	};
+
+export default {
+	state,
+	getters,
+	actions,
+	mutations
+};
