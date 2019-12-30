@@ -42,7 +42,6 @@ const state = {
 	editingBookmarks: false,
 	dataInitialized: false,
 	currentGrid: {},
-	token: {},
 	currentGridRefId: '',
 	responseData: { grids: [] }
 };
@@ -98,7 +97,6 @@ const getters = {
 		return bookmarkList; //this returns a list of bookmarks in the order they appear in the grid
 	},
 
-	token: state => state.token,
 	currentGridRefId: state => state.currentGridRefId,
 	gridShape: state => ({
 		count: state.currentGrid.bookmarks.length,
@@ -148,16 +146,18 @@ const getters = {
 };
 
 const actions = {
-	async fetchBookmarkGrids({ state, commit }) {
+	async fetchBookmarkGrids({ getters, commit }) {
 		//executed by components/MainGrid.vue at startup (created)
 
 		//api.bookmarksplus.org presently points at genericwhite/DEMO (port 9500)
 		
-		if (typeof(state.token.claims)=='undefined'){
+		//getters.token is used instead of state.token since I moved token to accounts.js
+		
+		if (typeof(getters.token.claims)=='undefined'){
 			return false;
 		}
 		
-		const userRefId=state.token.claims.userRefId;
+		const userRefId=getters.token.claims.userRefId;
 		
 		const response = await axios.get(
 			`http://api.bookmarksplus.org/bm/api/bookmarks/${userRefId}`
@@ -206,9 +206,6 @@ const actions = {
 };
 
 const mutations = {
-	token: (state, item) => {
-		state.token = item;
-	},
 	currentGridRefId: (state, item) => {
 		state.currentGridRefId = item;
 	},

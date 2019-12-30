@@ -7,6 +7,7 @@ console.dir({"VueCookies [account.js.]":VueCookies});
 //====================================================
 
 const state = {
+	token: {},
 	isLoggedIn: false,
 	authx:{
 		userName:'',
@@ -24,6 +25,7 @@ const state = {
 */
 
 const getters = {
+	token: state => state.token,
 	isLoggedIn: state => state.isLoggedIn,
 	auth: state => state.auth,
 };
@@ -54,6 +56,9 @@ const actions = {
 };
 
 const mutations = {
+	token: (state, item) => {
+		state.token = item;
+	},
 	isLoggedInXXX: (state, item) => {
 		state.isLoggedIn = item;
 	},
