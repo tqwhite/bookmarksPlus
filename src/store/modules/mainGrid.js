@@ -146,7 +146,7 @@ const getters = {
 };
 
 const actions = {
-	async fetchBookmarkGrids({ getters, commit }) {
+	async fetchBookmarkGrids({ getters, commit }, queryBookmark) {
 		//executed by components/MainGrid.vue at startup (created)
 
 		//api.bookmarksplus.org presently points at genericwhite/DEMO (port 9500)
@@ -178,10 +178,23 @@ const actions = {
 		commit('currentGrid', currentGrid);
 
 		commit('dataInitialized', true); //tell components it's time to display
+		
+		if (Object.keys(queryBookmark).length){
+			const nextEmptyCell=getters.getNextEmptyCell;
+			const newBookmark={
+				anchor:queryBookmark,
+				position:nextEmptyCell
+			}
+			commit('editingBookmarks', true);
+			commit('addNewBookmark', newBookmark);
+		}
 	},
-		async saveBookmarks({ state, commit }) {
-	
-			const id = state.token.claims._id;
+		async saveBookmarks({ state, commit, getters }) {
+			const token=getters.token;
+console.dir({"token [mainGrid.js.actions]":token});
+
+
+			const id = token.claims._id;
 			const response = await axios.put(
 				`http://api.bookmarksplus.org/api/bookmarks/${id}`,
 				state.responseData
@@ -217,8 +230,6 @@ const mutations = {
 	},
 	dataInitialized: (state, item) => {
 		state.dataInitialized = item;
-console.log("state.dataInitialized="+state.dataInitialized+" [mainGrid.js.mutations]");
-
 	},
 	columnWidth: (state, item) => {
 		state.currentGrid.columnWidth = item;

@@ -64,9 +64,6 @@ const actions = {
 			const tokenCookie=VueCookies.get('token');
 			if (tokenCookie.claims){
 				commit('isLoggedInXXX', true);
-console.log(`\n=-=============   dataInitialized xxx ========================= [account.js.actions]\n`);
-
-
 				commit('token', tokenCookie);
 			}
 		}
