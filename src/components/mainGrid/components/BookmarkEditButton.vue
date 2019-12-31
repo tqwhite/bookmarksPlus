@@ -33,6 +33,7 @@ DISCARD
 	  >
 	REORG
 	  </div>
+	   | <a title='drag to favorites bar' id='bookmarkletButton' v-on:click.prevent href="javascript:(function(){location.href='http://BookmarksPlus.org/#/?uri='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);})();">Bookmarklet</a>
   </div>
 </template>
 
@@ -115,5 +116,10 @@ color:rgba(white, .8);
 }
 #editButtonSave:hover{
 background:rgba(red, .8);
+}
+
+#bookmarkletButton{
+color:black;
+border:.5pt solid #666;
 }
 </style>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import VueCookies from 'vue-cookies';
 
-console.dir({"VueCookies [account.js.]":VueCookies});
 
 //====================================================
 //====================================================
@@ -76,8 +75,6 @@ const mutations = {
 	},
 	isLoggedInXXX: (state, item) => {
 		state.isLoggedIn = item;
-console.log("state.isLoggedIn="+state.isLoggedIn+" [account.js.mutations]");
-
 	},
 	
 	auth: (state, item) => {

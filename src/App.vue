@@ -33,8 +33,7 @@ export default {
   created() {
 
   },
-  methods: {
-  },
+  methods: {},
   components: {
     BookmarkEditButton,
     Account

@@ -191,9 +191,6 @@ const actions = {
 	},
 		async saveBookmarks({ state, commit, getters }) {
 			const token=getters.token;
-console.dir({"token [mainGrid.js.actions]":token});
-
-
 			const id = token.claims._id;
 			const response = await axios.put(
 				`http://api.bookmarksplus.org/api/bookmarks/${id}`,

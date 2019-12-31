@@ -79,9 +79,6 @@ export default {
 		}
 	},
 	created() {
-console.dir({"this.$route.query [MainGrid.vue.]":this.$route.query});
-
-
 		this.fetchBookmarkGrids(this.$route.query);
 	},
 	components: {
