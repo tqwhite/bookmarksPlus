@@ -19,6 +19,8 @@
 import BookmarkEditButton from "@/components/mainGrid/components/BookmarkEditButton.vue";
 import Account from "@/components/account/account.vue"; // @ is an alias to /src
 
+import { mapActions } from 'vuex';
+
 
 export default {
   name: "APP",
@@ -26,9 +28,10 @@ export default {
     bookmark: {}
   },
   computed: {
+  	...mapActions(['getCookies'])
   },
   created() {
-    //this.doSomething();
+
   },
   methods: {
   },

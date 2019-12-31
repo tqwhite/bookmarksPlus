@@ -25,7 +25,7 @@ const state = {
 */
 
 const getters = {
-	token: state => state.token,
+	token: (state) => state.token,
 	isLoggedIn: state => state.isLoggedIn,
 	auth: state => state.auth,
 };
@@ -53,14 +53,34 @@ const actions = {
 				dispatch('fetchBookmarkGrids');
 			}
 		},
+		
+		killCookie({commit}){
+			VueCookies.remove('token');
+				commit('isLoggedInXXX', false);
+				commit('dataInitialized', false);
+				commit('token', {});
+		},
+		getCookies({commit}){
+			const tokenCookie=VueCookies.get('token');
+			if (tokenCookie.claims){
+				commit('isLoggedInXXX', true);
+console.log(`\n=-=============   dataInitialized xxx ========================= [account.js.actions]\n`);
+
+
+				commit('token', tokenCookie);
+			}
+		}
 };
 
 const mutations = {
 	token: (state, item) => {
 		state.token = item;
+		VueCookies.set('token', item);
 	},
 	isLoggedInXXX: (state, item) => {
 		state.isLoggedIn = item;
+console.log("state.isLoggedIn="+state.isLoggedIn+" [account.js.mutations]");
+
 	},
 	
 	auth: (state, item) => {

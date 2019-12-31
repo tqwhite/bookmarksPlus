@@ -1,6 +1,6 @@
 <template >
 	<span >
-		<span v-if="token.claims">
+		<span v-if="isLoggedIn">
 			<Profile />
 		</span>
 		<span v-else>
@@ -22,12 +22,13 @@ export default {
 		msg: String
 	},
 	computed: {
-		...mapGetters(['token'])
+		...mapGetters(['isLoggedIn'])
 	},
 	methods: {
-		...mapActions([]),
+		...mapActions(['getCookies']),
 	},
 	created() {
+		this.getCookies();
 	},
 	components: {
 		Login,

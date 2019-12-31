@@ -2,7 +2,10 @@
 	<span 
 	
 	>
-	PROFILE
+		<div
+		v-on:click="cancelLogin"
+	class='login inputSubmit'>Cancel Login
+	</div>
 	</span>
 </template>
 
@@ -19,7 +22,10 @@ export default {
 		...mapGetters([])
 	},
 	methods: {
-		...mapActions([]),
+		...mapActions(["killCookie"]),
+		cancelLogin(){
+			this.killCookie();
+		}
 	},
 	created() {
 	},

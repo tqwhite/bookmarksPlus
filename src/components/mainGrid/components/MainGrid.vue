@@ -79,10 +79,7 @@ export default {
 		}
 	},
 	created() {
-console.log(`\n=-=============   fetchBookmarkGrids  ========================= [MainGrid.vue.]\n`);
-
-
-	this.fetchBookmarkGrids();
+		this.fetchBookmarkGrids();
 	},
 	components: {
 		BookmarkGridCell,

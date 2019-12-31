@@ -217,6 +217,8 @@ const mutations = {
 	},
 	dataInitialized: (state, item) => {
 		state.dataInitialized = item;
+console.log("state.dataInitialized="+state.dataInitialized+" [mainGrid.js.mutations]");
+
 	},
 	columnWidth: (state, item) => {
 		state.currentGrid.columnWidth = item;
