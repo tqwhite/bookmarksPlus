@@ -48,22 +48,17 @@ export default {
 		...mapActions(['fetchBookmarkGrids']),
 		setStyle: function() {
 			const windowHeight = window.innerHeight;
-			const bodyHeight = document.querySelector('body').clientHeight;
-			const containerDomObj = document.querySelector('#gridContainer');
-			const containerHeight = containerDomObj
-				? containerDomObj.clientHeight
-				: 0;
+			const navDomObj = document.querySelector('#nav');
+			
+			console.log('HACK: using "#nav" in MainGrid.vue');
+			console.dir({"navDomObj [MainGrid.vue.setStyle]":navDomObj});
+
+
 
 			let navHeight;
 			let fudgeFactor=20; //arithmetic always overflows space a little, no patience to fix it
 
-			if (containerHeight === 0) {
-				navHeight = bodyHeight;
-				fudgeFactor=30;
-			} else {
-				navHeight = windowHeight - containerHeight;
-				fudgeFactor=0;
-			}
+				navHeight =navDomObj.clientHeight;
 	
 			const intendedContainerHeight = windowHeight - navHeight-fudgeFactor;
 

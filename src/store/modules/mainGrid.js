@@ -60,17 +60,16 @@ const getters = {
 		const currentGrid = state.responseData.grids.filter(
 			item => (item.refId = state.currentGridRefId)
 		)[0];
-//dev utility for applying changes to entire set of bookmarks
-// 		currentGrid.bookmarks = conditionInputData(
-// 			currentGrid.columnWidth,
-// 			currentGrid.bookmarks
-// 		);
+		//dev utility for applying changes to entire set of bookmarks
+		// 		currentGrid.bookmarks = conditionInputData(
+		// 			currentGrid.columnWidth,
+		// 			currentGrid.bookmarks
+		// 		);
 
-//		currentGrid.bookmarks = currentGrid.bookmarks.slice(0, 12);
-// 		currentGrid.bookmarks.forEach(b =>
-// 			console.log(`A ${b.anchor.text}: ${b.position.row}/${b.position.column}`)
-// 		);
-
+		//		currentGrid.bookmarks = currentGrid.bookmarks.slice(0, 12);
+		// 		currentGrid.bookmarks.forEach(b =>
+		// 			console.log(`A ${b.anchor.text}: ${b.position.row}/${b.position.column}`)
+		// 		);
 
 		const cellCoordsList = makeCellList(currentGrid);
 
@@ -89,7 +88,7 @@ const getters = {
 				result = {
 					anchor: { text: '', uri: '' },
 					position: { row, column: col },
-					isPlaceholder:true
+					isPlaceholder: true
 				};
 			}
 			return result;
@@ -105,44 +104,39 @@ const getters = {
 			return Math.max(result, item.position.row);
 		}, 0)
 	}),
-	
-	
-	getNextEmptyCell: state=>{
-			const bookmarks=state.currentGrid.bookmarks;
-			const columnWidth=state.currentGrid.columnWidth;
-			
-			let lastRow = bookmarks.reduce((result, item) => {
-				const row = Math.max(item.position.row, result);
-				return row;
-			}, 0);
-			let lastCol = bookmarks.reduce((result, item) => {
-				if (item.position.row == lastRow) {
-					const col = Math.max(item.position.column, result);
-					return col;
-				} else {
-					return result;
-				}
-			}, 0);
-			
-			let nextCol=lastCol+1;
-			let nextRow=lastRow; //assume there's room
-			
 
+	getNextEmptyCell: state => {
+		const bookmarks = state.currentGrid.bookmarks;
+		const columnWidth = state.currentGrid.columnWidth;
 
-			if (nextCol >= columnWidth) {
-				nextCol = 0;
-				nextRow = lastRow+1;
+		let lastRow = bookmarks.reduce((result, item) => {
+			const row = Math.max(item.position.row, result);
+			return row;
+		}, 0);
+		let lastCol = bookmarks.reduce((result, item) => {
+			if (item.position.row == lastRow) {
+				const col = Math.max(item.position.column, result);
+				return col;
+			} else {
+				return result;
 			}
+		}, 0);
 
-			return {
-				row: nextRow,
-				column: nextCol
-			};
-		
-	
+		let nextCol = lastCol + 1;
+		let nextRow = lastRow; //assume there's room
+
+		if (nextCol >= columnWidth) {
+			nextCol = 0;
+			nextRow = lastRow + 1;
+		}
+
+		return {
+			row: nextRow,
+			column: nextCol
+		};
+
 	}
-	
-	
+
 };
 
 const actions = {
@@ -150,15 +144,15 @@ const actions = {
 		//executed by components/MainGrid.vue at startup (created)
 
 		//api.bookmarksplus.org presently points at genericwhite/DEMO (port 9500)
-		
+
 		//getters.token is used instead of state.token since I moved token to accounts.js
-		
-		if (typeof(getters.token.claims)=='undefined'){
+
+		if (typeof getters.token.claims == 'undefined') {
 			return false;
 		}
-		
-		const userRefId=getters.token.claims.userRefId;
-		
+
+		const userRefId = getters.token.claims.userRefId;
+
 		const response = await axios.get(
 			`http://api.bookmarksplus.org/bm/api/bookmarks/${userRefId}`
 		);
@@ -178,40 +172,70 @@ const actions = {
 		commit('currentGrid', currentGrid);
 
 		commit('dataInitialized', true); //tell components it's time to display
-		
-		if (Object.keys(queryBookmark).length){
-			const nextEmptyCell=getters.getNextEmptyCell;
-			const newBookmark={
-				anchor:queryBookmark,
-				position:nextEmptyCell
-			}
+
+		if (Object.keys(queryBookmark).length) {
+			const nextEmptyCell = getters.getNextEmptyCell;
+			const newBookmark = {
+				anchor: queryBookmark,
+				position: nextEmptyCell,
+				isQueryBookmark:true
+			};
 			commit('editingBookmarks', true);
 			commit('addNewBookmark', newBookmark);
+			console.log("HACK: scrolling to bottom for added bookmark visibility (move to component someday)");
+			setTimeout(()=>{window.scrollTo(0, 100);}, 100);
 		}
 	},
-		async saveBookmarks({ state, commit, getters }) {
-			const token=getters.token;
-			const id = token.claims._id;
-			const response = await axios.put(
-				`http://api.bookmarksplus.org/api/bookmarks/${id}`,
-				state.responseData
-			);
 	
-			if (response.status != 200) {
-				commit('errorCondition', response.statusText);
-			}
-		},
+	async saveBookmarks({ state, commit, getters }) {
+		const token = getters.token;
+		const id = token.claims._id;
+		
+		
+		
+		state.currentGrid.bookmarks = state.currentGrid.bookmarks
+			.filter(bookmark => {
+				const hasContent =
+					bookmark.anchor.text.match(/\w/) || bookmark.anchor.uri.match(/\w/);
 
-// 	saveBookmarks({ state }) {
-// 		console.log(state.responseData);
-// 		console.log('NOT SAVING');
-// 
-// 		return;
-// 	},
+				return hasContent ? true : false;
+				
+			})
+			.map(bookmark => {
+				Object.keys(bookmark).forEach(keyName => {
+					if (!['_id', 'cssClasses', 'anchor', 'position'].includes(keyName)) {
+						delete bookmark[keyName];
+					}
+				});
 
-	logBookmark({state}, b, label=''){
-		state.tmp=false; //this is here only to prevent lint from throwing a non-used error
-		console.log(`${label?label+': ':''}${b.anchor.text}: ${b.position.row}/${b.position.column}`);
+				return bookmark;
+			});
+			
+			
+		const response = await axios.put(
+			`http://api.bookmarksplus.org/api/bookmarks/${id}`,
+			state.responseData
+		);
+
+		if (response.status != 200) {
+			commit('errorCondition', response.statusText);
+		}
+	},
+
+	// 	saveBookmarks({ state }) {
+	// 		console.log(state.responseData);
+	// 		console.log('NOT SAVING');
+	//
+	// 		return;
+	// 	},
+
+	logBookmark({ state }, b, label = '') {
+		state.tmp = false; //this is here only to prevent lint from throwing a non-used error
+		console.log(
+			`${label ? label + ': ' : ''}${b.anchor.text}: ${b.position.row}/${
+				b.position.column
+			}`
+		);
 	}
 };
 
@@ -237,7 +261,7 @@ const mutations = {
 	errorCondition: (state, item) => {
 		state.errorCondition = item;
 	},
-	addNewBookmark: (state, newBookmark)=>{
+	addNewBookmark: (state, newBookmark) => {
 		state.currentGrid.bookmarks.push(newBookmark);
 	}
 };

@@ -31,7 +31,4 @@ export default {
 </script>
 
 <style scoped lang="less">
-/*
-the css for this component is defined in its parent
-*/
 </style>

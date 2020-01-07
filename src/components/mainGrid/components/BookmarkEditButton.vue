@@ -33,7 +33,7 @@ DISCARD
 	  >
 	REORG
 	  </div>
-	   | <a title='drag to favorites bar' id='bookmarkletButton' v-on:click.prevent href="javascript:(function(){location.href='http://BookmarksPlus.org/#/?uri='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);})();">Bookmarklet</a>
+	   | <a title='drag to favorites bar' id='bookmarkletButton' v-on:click.prevent href="javascript:(function(){location.href='http://BookmarksPlus.org/#/?uri='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);})();">Bookmarklet </a>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
 			<div id='links'>
 				<account /> |
 				<router-link to="/">Main Grid</router-link> |
-				<router-link to="/viewLinks">Auxilliary Links</router-link>
+				<router-link to="/viewLinks">Instructions</router-link>
 			</div>
 		</div>
 		<router-view />
